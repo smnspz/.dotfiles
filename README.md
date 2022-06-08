@@ -17,7 +17,7 @@ This is a `.dotfiles` folder inside `$HOME` in which I store my configuration fi
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
+This README, the .bashrc and .vimrc files are basically tweaked versions of these:
 * [moqmar/.bashrc](https://gist.github.com/moqmar/28dde796bb924dd6bfb1eafbe0d265e8)
 * [DomPizzie/README-Template.md](https://gist.github.com/DomPizzie/7a5ff55ffa9081f2de27c315f5018afc)
 * [amix/vimrc](https://github.com/amix/vimrc)
