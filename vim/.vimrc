@@ -98,5 +98,3 @@ let g:solarized_termtrans=1
 " put https://raw.github.com/altercation/vim-colors-solarized/master/colors/solarized.vim
 " in ~/.vim/colors/ and uncomment:
 " colorscheme solarized
-command! W :execute ':silent w !sudo tee % > /dev/null' | :if v:shell_error | :edit! | :endif
-command! W :execute ':silent w !sudo tee % > /dev/null' | :if v:shell_error | :edit! | :endif

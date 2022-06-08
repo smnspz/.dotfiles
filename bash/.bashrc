@@ -72,14 +72,6 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
-####################################################################
-## Type :W in vim (or :WQ respectively) to save a file using sudo ##
-####################################################################
-
-if which vim >/dev/null && ! grep '^command W ' ~/.vimrc >/dev/null 2>&1 && ! [ `id -u` -eq 0 ]; then
-	echo "command! W :execute ':silent w !sudo tee % > /dev/null' | :if v:shell_error | :edit! | :endif" >> ~/.vimrc
-fi
-
 #############################
 ## Warn about root shells! ##
 #############################
