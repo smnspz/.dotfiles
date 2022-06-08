@@ -1,0 +1,31 @@
+{
+    "workbench.startupEditor": "none",
+    "editor.minimap.enabled": false,
+    "editor.fontFamily": "'IBM Plex Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 16,
+    "workbench.iconTheme": "icons",
+    "terminal.integrated.defaultProfile.osx": "bash",
+    "workbench.sideBar.location": "right",
+    "terminal.integrated.fontSize": 16,
+    "editor.inlineSuggest.enabled": true,
+    "workbench.colorTheme": "Ace Palenight",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            80
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false,
+    },
+    "dart.runPubGetOnPubspecChanges": false,
+    "code-runner.executorMapByGlob": {
+        "pom.xml": "cd $dir && mvn clean package",
+        "*.ts": "node --loader ts-node/esm --no-warnings",
+    }
+}
