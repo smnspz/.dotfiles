@@ -25,7 +25,7 @@
     },
     "dart.runPubGetOnPubspecChanges": false,
     "code-runner.executorMapByGlob": {
-        "pom.xml": "cd $dir && mvn clean package",
-        "*.ts": "node --loader ts-node/esm --no-warnings",
-    }
+        "*.ts": "ts-node --esm $fullFileName",
+    },
+    "code-runner.runInTerminal": true,
 }
