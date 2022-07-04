@@ -28,4 +28,11 @@
         "*.ts": "ts-node --esm $fullFileName",
     },
     "code-runner.runInTerminal": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "extensions.ignoreRecommendations": true,
+    "files.exclude": {
+        "**/*.freezed.dart": true,
+        "**/*.g.dart": true
+    },
 }
