@@ -1,0 +1,856 @@
+la
+la | grep env
+vim .zshenv
+zsh
+la
+vim .zshenv
+zsh
+la
+source .zshrc
+la
+cd ..
+la
+zsh
+ls -la
+la
+la
+zsh
+cd Dev
+la
+la
+ls -la
+cd repos
+ls -la
+cd 
+ls -la
+mkdir .zsh
+ls -la
+cd .zsh
+ls -la
+nvm
+brew info nvm
+ls -la
+cd
+cd .zsh
+v .zshrc
+vim .zshrc
+nvim .zshrc
+la
+zsh
+ln -s .zsh/.zshenv .
+la
+ls -la
+zsh
+cd .zsh
+la
+la ~
+la
+v dev
+la
+chmod +x dev
+la
+git init
+la
+nvim .
+la
+cd
+la
+mv .zsh Dev/repos
+la
+mv .zshenv Dev/repos/.zsh
+la
+mv .zsh_history Dev/repos/.zsh
+la
+ln -s Dev/repos/.zsh .
+la
+cd .zsh
+la
+cd
+ln -s .zsh/.zshenv .
+la
+zsh
+clear
+exit
+if [ ! -d "/opt/homebrew/bin/brew" ]; then\
+echo "Found"\
+fi
+la
+clear
+zsh
+exit
+cd .android
+la
+cd cache
+la
+cd
+la
+cd Library
+la
+cd Android
+la
+cd sdk
+la
+cd cmdline-tools
+la
+cd latest
+la
+cd bin
+la
+cd ..
+cd ..
+cd ..
+la
+cd platform-tools
+la
+cd ..
+pwd
+cd
+cd .zsh
+la
+vim .
+source .zshrc
+cd
+la
+vim .zsh
+source ~/.zsh/.zshrvc
+source ~/.zsh/.zshrc
+clear
+clear
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=d29895b2-e362-4d17-b0ee-40ca65648d64" 
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=d29895b2-e362-4d17-b0ee-40ca65648d64" 
+security delete-internet-password -s git-codecommit.eu.west-1.amazonaws.com
+git fetch
+security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com
+clear
+git pull
+gat
+gst
+la
+security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com
+gst
+git checkout feature/push-notifications
+git checkout feature/push-notifications
+git fetch --all
+zsh
+vim .zsh
+asdf --help
+source .zsh/.zshrc
+asdf --help
+curl cheat.sh/go
+curl cheat.sh/go | less
+clear
+\:q
+exit
+security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com
+cd q8-club-mobile-app-android
+la
+gst
+gst
+git push
+git checkout develop
+gst
+vim .
+git checkout -b feature/new-sl-filters
+gst
+git push
+security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com
+git push
+clear
+cd ..
+la
+cd ..
+la
+cd playground
+la
+cd ..
+cd repos
+la
+make 
+clear
+cd ..
+cd playground
+la
+touch test.js
+vim test.js
+node test.js
+touch test.css
+vim test.css
+la
+vim test.css
+touch test.html
+vim test.html
+rm test.*
+la
+man xargx
+man xarg\ 
+man xarg
+man xargs
+brew install asdf
+where asdf
+source ~/.zsh/.zshrc
+clear
+vim ~/.config
+nvim .
+nvim .
+nvim .
+brew install tmux
+vim /opt/homebrew/opt/tmux/share/tmux
+cd
+la
+tmux
+clear
+la
+cd .config
+cd nvim
+vim .
+nvim .
+cd
+cd dev/playground
+la
+vim index.html
+nvim index.js
+clear
+la
+cd daisy-test
+vim .
+git add . 
+git commit -m 'first commit'
+vim .
+gst
+git add . && git commit -m 'feat: checked if homebrew is installed'
+git push
+gst
+git add .
+gst
+cd ..
+la
+git add . && git commit -m 'feat: checked if homebrew is installed'
+gst
+git push
+la
+vim .zshrc
+clear
+cd
+la
+cd dev/work
+la
+./push.sh
+vim push.sh
+./push.sh
+./push.sh
+vim push.sh
+vim ~/.zsh/.zshrc
+clear
+clear
+./push.sh 
+cd
+la
+cd .zsh
+gst
+git add custom/android.zsh .zshrc 
+git commit -m 'feat: added android platform-tools to path'
+gst
+git push
+vim .
+source .zshrc
+git add .
+git commit -m 'feat: added auto pair plugin'
+git push
+vim .
+git add . && git commit -m 'feat: added git pull and push aliases'
+git push
+la
+brew install jq
+cd
+cd dev/work/
+la
+./push.sh
+./push.sh
+./push.sh
+./push.sh
+./push.sh
+./push.sh
+vim ~/.ideavimrc
+vim ~/.ideavimrc
+./push.sh
+clear
+zsh
+vim brew.zsh
+zsh
+vim brew.zsh
+zsh
+brew 
+vim /custom/brew.zsh
+la
+cd custom
+la
+vim brew.zsh
+zsh
+clear
+la
+clear
+vim .
+gst
+zsh
+gst
+git add . && git commit -m 'added syntax higlighting to prompt'
+git push
+vim .
+la
+gst
+git add . 
+git commit
+git push
+zsh
+la
+gst
+git add .gitignore
+git commit 
+gst
+git diff .zcompdump
+git diff .zcompdump | less
+git add .zcompdump .zsh_history .zshenv .zshrc 
+git commit -m 'init commit'
+gst
+git add .zsh_plugins.txt .zsh_plugins.zsh 
+git commit -m 'added antidote .zsh_plugins files'
+gst
+git add dev
+git commit -m 'added init script'
+gst
+git add custom
+la
+gst
+git commit 'added antidote init scripts'
+gst
+git add .
+gst
+git commit
+gst
+la
+git remote add origin git@github.com:smnspz/.zsh.git
+git branch -M main
+git push -u origin main
+cd ..
+cd -
+vim README
+vim README.md
+git add .
+gst
+git commit -m 'added readme\
+''
+git commit -m 'added readme'
+git push
+vim README.md
+git add . && git commit -m 'added $HOME variable to readme instruction\
+'
+git push
+vim .
+zsh
+la
+vim .zsh_plugins.zsh
+zsh
+la
+rm -rf plugins
+la
+vim .zsh_plugins.txt
+zsh
+la
+zsh
+la custom
+vim ,.
+vim .
+vim .
+la
+rm -rf .antidote
+la
+zsh
+la
+cd .antidote
+la
+la
+cd ..
+la
+vim custom
+la
+vim .zshrc
+zsh
+la
+vim .gitignore
+la
+vim .gitignore
+la
+antidote load
+vim .zshrc
+zsh
+cd .zsh
+la
+vim .
+zsh
+la
+clear
+clear
+git fetch --all
+git checkout feature/push-notifications
+gst
+git branch 
+git checkout feature/energy+dexguard+prod
+open .
+git checkout -
+la
+cd
+v .zsh
+zsh
+la
+clear
+cd dev/work
+la
+cd q8-club-mobile-app-android
+la
+cd app
+la
+cd src
+la
+cd main
+la
+cd cpp
+la
+clear
+cd ..
+la
+cd ..
+cd ..
+ cd..
+ cd..
+cd ..
+cd ..
+la
+./push.sh
+git fetch --all
+cd q8-club-mobile-app-android
+git fetch --all
+zsh
+nvim
+brew --help
+clear
+brew info fzdf
+brew info fzf
+/opt/homebrew/opt/fzf/install
+la
+rm .bashrc
+v .zshrc
+la
+rm .fzf.zsh
+la
+clear
+zsh
+brew info fzf
+/usr/local/Cellar/brew --help
+la /usr/local/Cellar
+/opt/homebrew
+la
+cd /opt
+la
+cd homebrew
+la
+cd bin
+la
+./brew --help
+./brew doctor
+v ~/.zsh/.zshrc
+nvim .
+cd
+nvim 
+vim .zsh/.zshrc
+open .
+zsj
+zsh
+nvim .
+clear
+cd
+la
+cd playground
+la
+cd dev/playground
+la
+rm -rf daisy-test
+la
+la
+rm -rf daisy-test
+la
+cd ..
+la
+asdf plugin list all | grep java
+asdf plugin add java
+asdf list all java
+man asdf
+asdf --help
+asdf install java openjdk-18.0.2.1
+nvim ~/.config/nvim
+nvim .
+nvim .
+nvim work/q8-club-mobile-app-android
+cd work/q8-club-mobile-app-android
+la
+nvim 
+nvim .
+nvim .
+exit
+cd dev/playground
+la
+cd daisy-test
+la
+vim package.json 
+npm i -D tailwindcss postcss daisyui
+vim .
+nvim .
+la
+la src
+vim .
+nvim .
+nvim .
+nvim ~
+nvim ~/.config/nvim
+v App.tsx
+clear
+zsh
+exit
+nvim .config
+nvim .
+nvim .
+nvim .
+la
+vim .
+cd Dev/playground
+la
+npm create vite@latest daisy-test
+cd daisy-test
+la
+npm install
+npm install
+rm -rf node_modules
+npm install
+npm start
+npm run dev
+exit
+cd dev/work
+cd q8-club-mobile-app-android
+la
+nvim .
+cd
+la
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+.local/share/nvim
+cd .local/share/nvim
+la
+cd lazy
+la
+brew search inconsolata
+brew search font | grep jetbrains
+brew install homebrew/cask-fonts/font-jetbrains-mono-nerd-font
+brew install homebrew/cask-fonts/font-inconsolata-nerd-font
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+cd .config
+la
+cd nvim
+nvim .
+nvim .
+nvim .
+la
+cd lua
+la
+cd rosani
+la
+cd ..
+rm -rf plugins
+la
+cd rosani
+la
+mv plugins ..
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+la
+mv lsp ../plugins
+la
+cd ..
+la
+la plugins
+cd -
+la
+mv lsp.lua ../plugins
+nbim .
+nvim .
+gst
+git add .
+git reset --hard
+gst
+git add .
+gst
+la
+cd ..
+la
+cd ..
+la
+git add .
+gst
+git reset --hard
+gst
+nvim .
+la
+cd ..
+la
+rm -rf nvim
+la
+mkdir nvim
+mkdir lua
+cd lua
+mkdir rosani
+cd ..
+la
+cd nvim
+la
+la
+nvim 
+la
+cd ..
+la
+rm -rf lua
+la
+cd nvim
+la
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+cd .local
+la
+cd share
+la
+cd nvim
+la
+rm -rf lazy
+cd ..
+cd ..
+la
+cd state
+la
+cd nvim
+la
+rm -rf lazy
+nvim .
+cd
+la
+cd .config
+la
+cd nvim
+la
+nvim .
+zsh
+cd .config/nvim
+la
+cd cd lua
+la
+la
+cd lua
+la
+cd rosani
+la
+vim init.lua
+la
+vim remap.lua
+la
+vim remap.lua
+nvim .
+nvim .
+nvim .,
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .,
+nvim .
+cd dev/repos
+la
+cd nvimrc
+la
+cd lua
+la
+cd rosani
+la
+la
+vim remap
+vim remap.lua
+nvim .
+cd
+cd ..
+la
+cd ..
+la
+cd Applications
+la
+cd Android\ Studio.app
+la
+cd Contents
+la
+cd bin
+la
+nvim idea.properties
+exit
+cd
+la
+cd .android
+la
+exit
+cd dev/work
+cd q8
+cd q8-club-mobile-app-android
+la
+git checkout feature/push-notifications
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=bfdeb1b0-e7f6-4164-ba94-2504820a6f19" 
+clear
+cd
+cd .config
+la
+cd nvim
+la
+nvim .
+nvim 
+nvim .
+nvim .
+nvim .
+nvim .
+nvim 
+nvim .
+cd
+la
+cd .local
+la
+cd share
+la
+cd nvim
+la
+rm -rf lazy mason 
+la
+rm -rf telescope_history
+la
+cd ..
+la
+cd ..
+la
+cd state
+la
+cd nvim
+la
+rm -rf shada swap lazy
+la
+rm log lsp.log luasnip.log mason-registry-update mason.log
+la
+cd 
+cd .config/nvim
+la
+nvim .
+nvim .
+cd
+cd dev/repos
+la
+nvim nvimrc
+nvim .
+cd
+la
+clear
+source ~/.zsh/.zshrc
+la
+clear
+cd ~/Library/Caches/JetBrains
+cd Library
+la
+cd Caches
+la
+cd
+cd Library/Application\ Support/
+la
+cd Google
+la
+cd AndroidStudio2023.1
+la
+vim idea.properties
+nvim idea.properties
+tmux
+clear
+cd
+cd dev/wokr
+cd dev/work
+cd q8-club-mobile-app-android
+la
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=38dd9fff-d7dc-43eb-844b-015a60ca211c"
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=38dd9fff-d7dc-43eb-844b-015a60ca211c"
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=38dd9fff-d7dc-43eb-844b-015a60ca211c"
+adb shell am start -a android.intent.action.VIEW -d "adobeplaces://default?adb_validation_sessionid=38dd9fff-d7dc-43eb-844b-015a60ca211c"
+git checkout develop
+git pull
+security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com
+git pull
+cd ..
+nvim promo-post-click.json
+open .
+cd .config/nvim
+la
+nvim .
+nvim index.html
+nvim .
+nvim index.html
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+nvim .
+cd
+nvim .lolcal
+find .local java
+clear
+nvim .local
+clear
+brew search intellij
+brew install intellij-idea-ce
+cd dev/work/
+cd q8-club-mobile-app-android
+nvim .
