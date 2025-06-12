@@ -1,10 +1,17 @@
 # Dotfiles
+
 ## How to install
 
+Remove directory if it exists, example:
+
 ```bash
-# Remove directory if it exists, example:
 rm -rf .zsh
-# Then stow the directory
+```
+
+Then create a new empty config directory and stow it
+
+```bash
 cd /path/to/.dotfiles
+mkdir .zsh
 stow --target /path/to/config/.zsh .zsh
 ```
