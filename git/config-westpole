@@ -1,13 +1,16 @@
 [user]
-    name = Simone Rosani
-    email = rosani-ext@westpole.it
+  name = Simone Rosani
+  email = simone.rosani@cegeka.com
 
 [credential]
-    helper = !aws codecommit credential-helper $@
-    UseHttpPath = true
+  helper = !aws codecommit credential-helper $@
+  UseHttpPath = true
 
 [alias]
 	p = !security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com &> /dev/null && git pull
 
 [alias]
 	pp = !security delete-internet-password -s git-codecommit.eu-west-1.amazonaws.com &> /dev/null && git push 
+
+[alias]
+  pr = "!f() { /Users/rosani/dev/repos/codecommit-create-pr.sh \"$1\" \"$2\" \"$3\"; }; f"
