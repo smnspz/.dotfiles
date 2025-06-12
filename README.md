@@ -15,3 +15,5 @@ cd /path/to/.dotfiles
 mkdir .zsh
 stow --target /path/to/config/.zsh .zsh
 ```
+
+Remember to stow copy the .env.example file too, and add the sensitive environment variables not committed to VCS
