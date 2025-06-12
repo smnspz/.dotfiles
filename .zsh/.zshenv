@@ -1,3 +1,6 @@
+if [ -f $HOME/.env ]; then
+    export $(grep -v '^#' $HOME/.env | xargs) 
+fi
 export ZDOTDIR=$HOME/.zsh
 export XDG_CONFIG_HOME=$HOME/.config
 export BAT_THEME="Monokai Extended"
@@ -5,7 +8,6 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 export LESSHISTFILE=-
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/rosani/Dev/work/service-account.json
-export ***REMOVED***
 export ANDROID_SDK=/Users/rosani/Library/Android/sdk
 export ANDROID_HOME=/Users/rosani/Library/Android/sdk
 export PATH="$PATH":"$HOME/.pub-cache/bin"
