@@ -19,22 +19,20 @@
   defaultBranch = main
 
 [alias]
-  bb = !/Users/rosani/dev/repos/better-git-branch.sh
-
-[alias]
   dd = !git diff --name-only --relative --diff-filter=d | xargs bat --diff
 
 [rerere]
   enabled = true
 
-# The last forward slash includes every directory inside work
-[includeif "gitdir/i:~/Dev/work/"]
-  path = ~/.config/git/config-westpole
+# It's possible to include a custom git configuration based on the working directory. For example: 
+# [includeif "gitdir/i:/your/work/directory"]
+#  path = /path/to/your/work/git/config
 
 [column]
   ui = auto
 
 [branch]
   sort = committerdate
+
 [merge]
   tool = vimdiff
