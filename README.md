@@ -17,6 +17,8 @@ into `~/.config/<package>/`:
 
 - GNU Stow — `brew install stow`, `apt install stow`, `pacman -S stow`
 - Git and `make` (macOS: `xcode-select --install`)
+- A font for the Ghostty config: **Iosevka Term**, available at
+  [typeof.net/Iosevka](https://typeof.net/Iosevka/)
 
 Each package requires a minimum tool version, checked by `make doctor` (and
 automatically as the first step of `make link`):
@@ -95,8 +97,7 @@ shows the expected shape.
 │   ├── tmux.conf
 │   └── plugins/             # gitignored; managed by TPM
 ├── git/
-│   ├── config
-│   └── config-westpole
+│   └── config
 ├── .env.example
 └── README.md
 ```
