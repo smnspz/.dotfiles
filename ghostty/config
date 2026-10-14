@@ -1,0 +1,17 @@
+# Ghostty configuration
+# Source of truth: ~/dev/repos/.dotfiles/ghostty/config
+# Stowed to:        ~/.config/ghostty/config
+# Ghostty 1.3.1
+
+font-family = Iosevka Term
+font-size = 14
+
+# ---------------------------------------------------------------------------
+# Migrated from the retired Alacritty config (alacritty/alacritty.toml).
+# The old settings are preserved here as comments; uncomment to reproduce
+# that look in Ghostty.
+# ---------------------------------------------------------------------------
+# background-opacity = 0.9
+# background-blur = true
+# window-padding-x = 5
+# window-padding-y = 27
