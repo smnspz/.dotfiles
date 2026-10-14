@@ -1,1 +1,6 @@
+.zsh/.antidote/
+.zsh/.zcompdump
+.zsh/.zsh_history
+.zsh/.zsh_plugins.zsh
+.zsh/.zsh_sessions/
 tmux/plugins

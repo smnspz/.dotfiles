@@ -15,6 +15,7 @@ min_of() {
         nvim)    echo 0.12.0 ;;  # vim.pack, treesitter incremental selection
         tmux)    echo 3.2 ;;     # extended-keys option; catppuccin
         git)     echo 2.37 ;;    # push.autoSetupRemote
+        zsh)     echo 5.0 ;;     # path+=() array append; antidote
     esac
 }
 
@@ -24,6 +25,7 @@ version_of() {
         nvim)    report="nvim --version" ;;
         tmux)    report="tmux -V" ;;
         git)     report="git --version" ;;
+        zsh)     report="zsh --version" ;;
         *)       return 0 ;;
     esac
     # shellcheck disable=SC2086
@@ -43,9 +45,10 @@ version_ge() { # version_ge HAVE NEED
     }'
 }
 
-PKGS="${*:-ghostty nvim tmux git}"
+PKGS="${*:-ghostty nvim tmux git zsh}"
 rc=0
 for p in $PKGS; do
+    [ "$p" = ".zsh" ] && p=zsh   # package name -> tool name
     min=$(min_of "$p")
     [ -n "$min" ] || continue
 

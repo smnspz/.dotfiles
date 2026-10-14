@@ -5,29 +5,32 @@
 #   sh scripts/stow-preflight.sh apply    # back up real files / re-link orphans
 #
 # Environment:
-#   PACKAGES  space-separated package list (default: ghostty nvim tmux git)
+#   PACKAGES  space-separated package list (default: all packages)
 #   REPO      dotfiles root (default: parent of this script's dir)
-#   CONFIG    target root   (default: $XDG_CONFIG_HOME or ~/.config)
 
 set -u
 
 REPO="${REPO:-$(cd "$(dirname "$0")/.." && pwd)}"
-CONFIG="${CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}}"
-PACKAGES="${PACKAGES:-ghostty nvim tmux git}"
+# shellcheck source=scripts/lib.sh
+. "$REPO/scripts/lib.sh"
+
+PACKAGES="${PACKAGES:-$(default_packages)}"
 MODE="${1:-report}"
 BACKUP="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
 
 found=0
 for pkg in $PACKAGES; do
     [ -d "$REPO/$pkg" ] || continue
+    target=$(stow_target "$pkg")
 
     # Let stow itself report which target paths are in the way.
-    conflicts=$(stow -n -v -d "$REPO" --target "$CONFIG/$pkg" "$pkg" 2>&1 |
+    conflicts=$(stow -n -v -d "$REPO" --target "$target" "$pkg" 2>&1 |
         sed -n -e 's/.*existing target is not owned by stow: //p' \
+               -e 's/.*over existing target \(.*\) since neither a link nor a directory.*/\1/p' \
                -e 's/.*existing target is neither a link nor a directory: //p')
 
     for name in $conflicts; do
-        dest="$CONFIG/$pkg/$name"
+        dest="$target/$name"
         found=$((found + 1))
 
         if [ -L "$dest" ] && [ "$dest" -ef "$REPO/$pkg/$name" ]; then

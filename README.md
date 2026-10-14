@@ -4,14 +4,18 @@ Personal configuration managed with [GNU Stow](https://www.gnu.org/software/stow
 plus a small `Makefile` wrapper.
 
 Each top-level directory is a **Stow package** whose contents map, file for file,
-into `~/.config/<package>/`:
+into its target (usually `~/.config/<package>/`):
 
 | Package   | Target              | Contents                                |
 |-----------|---------------------|-----------------------------------------|
 | `ghostty` | `~/.config/ghostty` | Ghostty terminal config                 |
 | `nvim`    | `~/.config/nvim`    | Neovim (kickstart-based, `vim.pack`)    |
 | `tmux`    | `~/.config/tmux`    | tmux config (+ vendored plugins)        |
-| `git`     | `~/.config/git`     | Git config and per-host variants        |
+| `git`     | `~/.config/git`     | Git config                              |
+| `.zsh`    | `~/.zsh`            | zsh config (`ZDOTDIR`) and `custom/`    |
+
+`~/.zsh` is driven by `ZDOTDIR`, so `make link` also creates the `~/.zshenv`
+symlink that points zsh at it.
 
 ## Prerequisites
 
@@ -29,6 +33,7 @@ automatically as the first step of `make link`):
 | `tmux`    | 3.2     | `extended-keys` option; catppuccin        |
 | `git`     | 2.37    | `push.autoSetupRemote`                    |
 | `ghostty` | 1.0.0   | config keys used                          |
+| `.zsh`    | 5.0     | zsh config (`ZDOTDIR`, `path+=()`)        |
 
 ## Install
 
@@ -85,7 +90,10 @@ shows the expected shape.
 .dotfiles/
 ├── Makefile
 ├── scripts/
-│   └── stow-preflight.sh    # conflict detection / backup
+│   ├── lib.sh               # package -> target map
+│   ├── stow.sh              # link / relink / unlink / adopt
+│   ├── stow-preflight.sh    # conflict detection / backup
+│   └── check-versions.sh    # tool version gate
 ├── ghostty/
 │   └── config
 ├── nvim/
@@ -98,6 +106,10 @@ shows the expected shape.
 │   └── plugins/             # gitignored; managed by TPM
 ├── git/
 │   └── config
+├── .zsh/
+│   ├── .zshenv, .zshrc
+│   ├── .zsh_plugins.txt
+│   └── custom/              # aliases, fzf, nvm, asdf, …
 ├── .env.example
 └── README.md
 ```
