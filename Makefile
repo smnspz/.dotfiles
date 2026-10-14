@@ -8,18 +8,21 @@ PACKAGES := ghostty nvim tmux git
 STOW     := stow -d "$(REPO)"
 
 .DEFAULT_GOAL := help
-.PHONY: help check link relink unlink adopt tmux-plugins
+.PHONY: help doctor check link relink unlink adopt tmux-plugins
 
 help: ## show this help
 	@printf 'Usage: make <target>\n\nTargets:\n'
 	@grep -hE '^[a-zA-Z0-9_-]+:.*## ' $(MAKEFILE_LIST) \
 		| awk 'BEGIN{FS=":.*## "}{printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
+doctor: ## check installed tool versions against required minimums
+	@sh scripts/check-versions.sh $(PACKAGES)
+
 check: ## dry run: list paths that would block stow (changes nothing)
 	@PACKAGES="$(PACKAGES)" REPO="$(REPO)" CONFIG="$(CONFIG)" \
 		sh scripts/stow-preflight.sh report
 
-link: check ## back up/relink any conflicts, then stow every package
+link: doctor check ## verify versions + back up/relink conflicts, then stow every package
 	@PACKAGES="$(PACKAGES)" REPO="$(REPO)" CONFIG="$(CONFIG)" \
 		sh scripts/stow-preflight.sh apply
 	@for p in $(PACKAGES); do \
@@ -41,6 +44,7 @@ adopt: ## pull existing real files INTO the repo (machine wins), then show diff
 	@git -C "$(REPO)" --no-pager diff --stat
 
 link-%: ## stow a single package, e.g. `make link-nvim`
+	@sh scripts/check-versions.sh "$*"
 	@mkdir -p "$(CONFIG)/$*"; $(STOW) --target "$(CONFIG)/$*" "$*"
 
 unlink-%: ## unstow a single package, e.g. `make unlink-nvim`

@@ -18,6 +18,16 @@ into `~/.config/<package>/`:
 - GNU Stow — `brew install stow`, `apt install stow`, `pacman -S stow`
 - Git and `make` (macOS: `xcode-select --install`)
 
+Each package requires a minimum tool version, checked by `make doctor` (and
+automatically as the first step of `make link`):
+
+| Package   | Minimum | Required for                              |
+|-----------|---------|-------------------------------------------|
+| `nvim`    | 0.12.0  | `vim.pack`, incremental selection         |
+| `tmux`    | 3.2     | `extended-keys` option; catppuccin        |
+| `git`     | 2.37    | `push.autoSetupRemote`                    |
+| `ghostty` | 1.0.0   | config keys used                          |
+
 ## Install
 
 ```bash
@@ -42,8 +52,9 @@ make tmux-plugins   # clone TPM; afterwards press prefix + I inside tmux
 
 | Target                        | What it does                                     |
 |-------------------------------|--------------------------------------------------|
+| `doctor`                      | Check installed tool versions vs. minimums        |
 | `check`                       | Dry run — list paths that would block Stow       |
-| `link`                        | Preflight + stow every package                   |
+| `link`                        | Verify versions + preflight, then stow all       |
 | `relink`                      | Re-stow all (pick up added/removed files)        |
 | `unlink`                      | Remove all Stow-managed symlinks                 |
 | `adopt`                       | Pull existing real files into the repo + diff    |
