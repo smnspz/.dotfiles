@@ -1,4 +1,1 @@
-.zsh/.antidote
-.zsh/.zsh_sessions/*
-!.zsh/.zsh_sessions/.gitkeep
 tmux/plugins
