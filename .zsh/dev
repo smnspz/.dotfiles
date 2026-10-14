@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ -e ~/.zshenv ]]; then
-    rm ~/.zshenv
-fi
-    ln -s $(pwd)/.zshenv ~

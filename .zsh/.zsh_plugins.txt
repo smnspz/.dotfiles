@@ -1,3 +1,0 @@
-sindresorhus/pure
-zdharma-continuum/fast-syntax-highlighting
-hlissner/zsh-autopair
