@@ -468,7 +468,6 @@ do
     spec = {
       { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
       { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
     },
   }
@@ -730,6 +729,10 @@ do
       --  For example, in C this would take you to the header.
       map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+      -- Show the signature and documentation of the symbol under your cursor
+      -- in a floating hover window.
+      map('<leader>h', vim.lsp.buf.hover, '[H]over documentation')
+
       -- The following two autocommands are used to highlight references of the
       -- word under your cursor when your cursor rests there for a little while.
       --    See `:help CursorHold` for information about when this is executed
@@ -765,6 +768,35 @@ do
       -- This may be unwanted, since they displace some of your code
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
         map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+      end
+
+      -- Jump between a C/C++ declaration and its definition.
+      --  `textDocument/switchSourceHeader` is a clangd extension outside the LSP
+      --  spec, so Neovim has no built-in binding for it. clangd answers with the
+      --  URI of the paired header or source file, or an empty string on no match.
+      if client and client.name == 'clangd' then
+        map('<leader>ch', function()
+          -- Handle clangd's answer: a URI string, or an empty string on no match
+          local on_switch = function(err, result)
+            if err then
+              vim.notify('clangd: ' .. err.message, vim.log.levels.ERROR)
+              return
+            end
+
+            -- else
+
+            if result == nil or result == '' then
+              vim.notify('clangd: no header/source counterpart for this file', vim.log.levels.WARN)
+              return
+            end
+
+            -- Open the counterpart in the current window
+            vim.cmd.edit(vim.fn.fnameescape(vim.uri_to_fname(result)))
+          end
+
+          -- Ask clangd for the paired file using its protocol extension
+          vim.lsp.buf_request(event.buf, 'textDocument/switchSourceHeader', { uri = vim.uri_from_bufnr(event.buf) }, on_switch)
+        end, '[C]langd [H]eader/source swap')
       end
     end,
   })
