@@ -210,6 +210,82 @@ do
   }
 
   vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Open file [E]xplorer (netrw)' })
+
+  -- Sort netrw listings by modification time, most recently changed first.
+  --  `time` sorts on `getftime()`; `reverse` flips it so the newest is at the top.
+  --  See `:help g:netrw_sort_by` and `:help g:netrw_sort_direction`
+  vim.g.netrw_sort_by = 'time'
+  vim.g.netrw_sort_direction = 'reverse'
+
+  -- Hide the `.git` directory from netrw listings.
+  --  `netrw_hide = 1` hides entries matching `netrw_list_hide` (also the default).
+  --  The pattern is deliberately unanchored: time sorting prefixes each entry with
+  --  a timestamp, so a `^`-anchored pattern would fail to match. It is scoped to
+  --  `.git/` so other dotfiles like `.gitignore` or `.github` stay visible.
+  --  See `:help g:netrw_list_hide`
+  vim.g.netrw_list_hide = '\\.git/'
+  vim.g.netrw_hide = 1
+
+  -- netrw's time sort orders `./` and `../` by their own directory mtime, so in
+  --  reverse order they float to the top. Re-pin them to the bottom after every
+  --  listing is drawn. Wide and tree listings are skipped, as they do not place
+  --  one entry per line.
+  ---@param line string
+  ---@return boolean
+  local function is_netrw_parent_entry(line) return line == './' or line == '../' or line:match '^%./%s' or line:match '^%.%./%s' end
+
+  ---Check whether the given entries already sit at the end of the listing.
+  ---@param lines string[]
+  ---@param moved string[]
+  ---@return boolean
+  local function netrw_entries_trailing(lines, moved)
+    local offset = #lines - #moved
+    for k = 1, #moved do
+      if lines[offset + k] ~= moved[k] then return false end
+    end
+    return true
+  end
+
+  ---Move netrw's `./` and `../` entries to the bottom of a time-sorted listing.
+  local function pin_netrw_parent_entries()
+    if vim.bo.filetype ~= 'netrw' or vim.g.netrw_sort_by ~= 'time' then return end
+
+    -- Wide and tree listings are not one entry per line
+    local liststyle = tonumber(vim.w.netrw_liststyle)
+    if liststyle ~= nil and liststyle ~= 0 and liststyle ~= 1 then return end
+
+    local buf = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+    local first = tonumber(vim.w.netrw_bannercnt) or 1
+
+    -- Separate the entries to move from the rest of the listing
+    local moved, rest = {}, {}
+    for i, line in ipairs(lines) do
+      if i >= first and is_netrw_parent_entry(line) then
+        moved[#moved + 1] = line
+      else
+        rest[#rest + 1] = line
+      end
+    end
+
+    -- Skip when there is nothing to move or they are already last
+    if #moved == 0 or netrw_entries_trailing(lines, moved) then return end
+
+    -- Rebuild the listing with the moved entries appended at the end
+    vim.list_extend(rest, moved)
+    vim.bo[buf].modifiable = true
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, rest)
+    vim.bo[buf].modifiable = false
+    vim.bo[buf].modified = false
+  end
+
+  vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('kickstart-netrw-pin', { clear = true }),
+    pattern = 'netrw',
+    desc = 'Keep ./ and ../ last in time-sorted netrw listings',
+    callback = pin_netrw_parent_entries,
+  })
+
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
