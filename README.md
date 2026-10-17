@@ -111,6 +111,8 @@ shows the expected shape.
 │   ├── .zsh_plugins.txt
 │   └── custom/              # aliases, fzf, nvm, asdf, …
 ├── .env.example
+├── CHANGELOG.md             # release notes (Keep a Changelog)
+├── VERSION                  # single source of truth for the version
 └── README.md
 ```
 
