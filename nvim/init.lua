@@ -698,7 +698,33 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
+    -- C and C++.
+    --  clangd takes its real compiler flags from the project's
+    --  compile_commands.json, so a CMake project has to generate that file.
+    --  `fallbackFlags` only applies to files with no entry in it, such as a
+    --  header opened on its own, which is why it names the standard explicitly.
+    --  Anything project-specific belongs in the project's own `.clangd` file
+    --  rather than here; this entry stays deliberately generic.
+    --
+    --  zerobrew's `llvm` is keg-only, so its clangd is not on PATH. Point at it
+    --  directly so the server version matches the compiler every CMake preset
+    --  builds with, and fall back to PATH (Mason's clangd) when llvm is absent.
+    clangd = (function()
+      local llvm = '/opt/zerobrew/opt/llvm/bin'
+      if vim.uv.fs_stat(llvm .. '/clangd') == nil then return { cmd = { 'clangd' } } end
+      return {
+        cmd = {
+          llvm .. '/clangd',
+          '--background-index',
+          '--completion-style=detailed',
+          -- clangd never queries a compiler driver automatically; --query-driver
+          -- is an explicit allowlist. Needed so it can read the SDK's system
+          -- includes out of the clang++ named in compile_commands.json.
+          '--query-driver=' .. llvm .. '/clang*',
+        },
+        init_options = { fallbackFlags = { '-std=c++20' } },
+      }
+    end)(),
     gopls = {},
     pyright = {},
     -- rust_analyzer = {},
