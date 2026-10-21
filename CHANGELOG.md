@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   inserts brackets when a function or method completion is accepted.
 - `nvim`: a `neocmake` language server for CMake build scripts, completing
   commands, variables and options and reading `CMakePresets.json`.
+- `nvim`: JSON and JSONC buffers are validated against SchemaStore schemas via
+  `jsonls`, with a `$schema` key in the document still taking precedence.
 
 ### Changed
 

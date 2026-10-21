@@ -772,6 +772,11 @@ do
     end,
   })
 
+  -- SchemaStore catalog for jsonls (see the `jsonls` entry below).
+  --  Added here, before the `servers` table, because that table reads
+  --  `require('schemastore')` while it is being built.
+  vim.pack.add { gh 'b0o/schemastore.nvim' }
+
   -- Enable the following language servers
   --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
   --  See `:help lsp-config` for information about keys and how to configure
@@ -848,6 +853,22 @@ do
       init_options = {
         typescript = {
           tsdk = vim.fs.joinpath(vim.fn.getcwd(), 'node_modules', 'typescript', 'lib'),
+        },
+      },
+    },
+
+    -- JSON and JSON with comments (`jsonc`, which is what Neovim detects for
+    --  `tsconfig.json`, `.eslintrc` and `*.jsonc`).
+    --  Schemas come from the SchemaStore catalog (package.json, tsconfig.json,
+    --  .eslintrc, devcontainer.json, ...), so validation plus key/value
+    --  completion work with no per-project setup. A `$schema` key inside a
+    --  document is still honoured, and project-specific schemas belong in that
+    --  document rather than in this deliberately generic list.
+    jsonls = {
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
         },
       },
     },
