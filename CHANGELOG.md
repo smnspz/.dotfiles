@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- `nvim`: the file explorer is now `nvim-tree` instead of
+  `telescope-file-browser`. `<leader>e` toggles the tree on the current file,
+  and opening a directory (e.g. `nvim .`) opens the tree.
+
 ## [0.3.0] - 2026-10-21
 
 ### Added

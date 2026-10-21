@@ -210,7 +210,7 @@ do
   }
 
   -- Disable netrw, the built-in file explorer, so directory buffers go to
-  --  telescope-file-browser instead (set up in Section 4).
+  --  nvim-tree instead (set up in Section 4).
   --  Neovim loads netrw with `packadd netrw` behind a guard on these two globals,
   --  so setting them before plugin scripts run keeps netrw off the runtime path
   --  entirely: no `:Ex`, no `FileExplorer` autocmds, no directory takeover.
@@ -511,7 +511,6 @@ do
     gh 'nvim-lua/plenary.nvim',
     gh 'nvim-telescope/telescope.nvim',
     gh 'nvim-telescope/telescope-ui-select.nvim',
-    gh 'nvim-telescope/telescope-file-browser.nvim',
   }
   if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 
@@ -531,20 +530,12 @@ do
     -- pickers = {}
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
-      -- NOTE: the key must match the extension's module name
-      -- (`telescope._extensions.file_browser`), so it uses an underscore.
-      file_browser = {
-        -- Open the file browser instead of netrw when a directory is opened,
-        -- e.g. `nvim .` or `:edit <dir>`. Netrw itself is disabled in Section 1.
-        hijack_netrw = true,
-      },
     },
   }
 
   -- Enable Telescope extensions if they are installed
   pcall(require('telescope').load_extension, 'fzf')
   pcall(require('telescope').load_extension, 'ui-select')
-  pcall(require('telescope').load_extension, 'file_browser')
 
   -- See `:help telescope.builtin`
   local builtin = require 'telescope.builtin'
@@ -561,19 +552,21 @@ do
   vim.keymap.set('n', '<leader>p', builtin.git_files, { desc = 'Search Git Files' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
-  -- Browse the file system from the current buffer's directory, with that file
-  -- selected. This replaces netrw's `:Ex`; netrw is disabled in Section 1.
-  vim.keymap.set(
-    'n',
-    '<leader>e',
-    function()
-      require('telescope').extensions.file_browser.file_browser {
-        path = '%:p:h',
-        select_buffer = true,
-      }
-    end,
-    { desc = 'Open file [E]xplorer' }
-  )
+  -- File explorer, replacing netrw (disabled in Section 1).
+  --  nvim-tree takes over directory buffers through its default
+  --  `hijack_directories`, so `nvim .` opens the tree instead of a listing.
+  vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
+  require('nvim-tree').setup {
+    -- Netrw handling belongs to Section 1. With `hijack_netrw` left on,
+    --  nvim-tree clears netrw's `FileExplorer` autocmd group, which does not
+    --  exist here and raises E216; `disable_netrw` still enables directory
+    --  hijacking while `hijack_netrw = false` skips that clearing.
+    disable_netrw = true,
+    hijack_netrw = false,
+  }
+
+  -- Reveal the current file in the tree and toggle it; replaces netrw's `:Ex`.
+  vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'Open file [E]xplorer' })
 
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
   -- If you later switch picker plugins, this is where to update these mappings.
