@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `BufLeave`, skipping unnamed, special and unmodified buffers.
 - `nvim`: `nvim-autopairs` closes brackets and quotes as you type, and blink.cmp
   inserts brackets when a function or method completion is accepted.
+- `nvim`: a `neocmake` language server for CMake build scripts, completing
+  commands, variables and options and reading `CMakePresets.json`.
 
 ### Changed
 

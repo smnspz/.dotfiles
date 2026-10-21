@@ -804,6 +804,13 @@ do
         init_options = { fallbackFlags = { '-std=c++20' } },
       }
     end)(),
+    -- CMake build scripts.
+    --  neocmakelsp above all understands `CMakePresets.json`, completes commands,
+    --  variables and options, and pairs with clangd: this edits the build
+    --  scripts, while clangd reads their output (compile_commands.json) to
+    --  understand the C/C++ sources. Its completions need snippet support, which
+    --  Neovim's default client capabilities already advertise.
+    neocmake = {},
     gopls = {},
     pyright = {},
     -- rust_analyzer = {},
