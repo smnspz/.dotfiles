@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `nvim`: modified file buffers are saved automatically on `FocusLost` and
   `BufLeave`, skipping unnamed, special and unmodified buffers.
+- `nvim`: `nvim-autopairs` closes brackets and quotes as you type, and blink.cmp
+  inserts brackets when a function or method completion is accepted.
 
 ### Changed
 
