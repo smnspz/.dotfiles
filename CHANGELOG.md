@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `nvim`: modified file buffers are saved automatically on `FocusLost` and
+  `BufLeave`, skipping unnamed, special and unmodified buffers.
+
+### Changed
+
+- `nvim`: netrw is gone, replaced by `telescope-file-browser.nvim`. `<leader>e`
+  opens the browser in the current file's directory with that file selected, and
+  opening a directory (e.g. `nvim .`) opens the browser instead of a listing.
+
 ## [0.2.0] - 2026-10-17
 
 ### Added

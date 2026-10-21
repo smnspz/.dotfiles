@@ -209,82 +209,14 @@ do
     },
   }
 
-  vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Open file [E]xplorer (netrw)' })
-
-  -- Sort netrw listings by modification time, most recently changed first.
-  --  `time` sorts on `getftime()`; `reverse` flips it so the newest is at the top.
-  --  See `:help g:netrw_sort_by` and `:help g:netrw_sort_direction`
-  vim.g.netrw_sort_by = 'time'
-  vim.g.netrw_sort_direction = 'reverse'
-
-  -- Hide the `.git` directory from netrw listings.
-  --  `netrw_hide = 1` hides entries matching `netrw_list_hide` (also the default).
-  --  The pattern is deliberately unanchored: time sorting prefixes each entry with
-  --  a timestamp, so a `^`-anchored pattern would fail to match. It is scoped to
-  --  `.git/` so other dotfiles like `.gitignore` or `.github` stay visible.
-  --  See `:help g:netrw_list_hide`
-  vim.g.netrw_list_hide = '\\.git/'
-  vim.g.netrw_hide = 1
-
-  -- netrw's time sort orders `./` and `../` by their own directory mtime, so in
-  --  reverse order they float to the top. Re-pin them to the bottom after every
-  --  listing is drawn. Wide and tree listings are skipped, as they do not place
-  --  one entry per line.
-  ---@param line string
-  ---@return boolean
-  local function is_netrw_parent_entry(line) return line == './' or line == '../' or line:match '^%./%s' or line:match '^%.%./%s' end
-
-  ---Check whether the given entries already sit at the end of the listing.
-  ---@param lines string[]
-  ---@param moved string[]
-  ---@return boolean
-  local function netrw_entries_trailing(lines, moved)
-    local offset = #lines - #moved
-    for k = 1, #moved do
-      if lines[offset + k] ~= moved[k] then return false end
-    end
-    return true
-  end
-
-  ---Move netrw's `./` and `../` entries to the bottom of a time-sorted listing.
-  local function pin_netrw_parent_entries()
-    if vim.bo.filetype ~= 'netrw' or vim.g.netrw_sort_by ~= 'time' then return end
-
-    -- Wide and tree listings are not one entry per line
-    local liststyle = tonumber(vim.w.netrw_liststyle)
-    if liststyle ~= nil and liststyle ~= 0 and liststyle ~= 1 then return end
-
-    local buf = vim.api.nvim_get_current_buf()
-    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-    local first = tonumber(vim.w.netrw_bannercnt) or 1
-
-    -- Separate the entries to move from the rest of the listing
-    local moved, rest = {}, {}
-    for i, line in ipairs(lines) do
-      if i >= first and is_netrw_parent_entry(line) then
-        moved[#moved + 1] = line
-      else
-        rest[#rest + 1] = line
-      end
-    end
-
-    -- Skip when there is nothing to move or they are already last
-    if #moved == 0 or netrw_entries_trailing(lines, moved) then return end
-
-    -- Rebuild the listing with the moved entries appended at the end
-    vim.list_extend(rest, moved)
-    vim.bo[buf].modifiable = true
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, rest)
-    vim.bo[buf].modifiable = false
-    vim.bo[buf].modified = false
-  end
-
-  vim.api.nvim_create_autocmd('FileType', {
-    group = vim.api.nvim_create_augroup('kickstart-netrw-pin', { clear = true }),
-    pattern = 'netrw',
-    desc = 'Keep ./ and ../ last in time-sorted netrw listings',
-    callback = pin_netrw_parent_entries,
-  })
+  -- Disable netrw, the built-in file explorer, so directory buffers go to
+  --  telescope-file-browser instead (set up in Section 4).
+  --  Neovim loads netrw with `packadd netrw` behind a guard on these two globals,
+  --  so setting them before plugin scripts run keeps netrw off the runtime path
+  --  entirely: no `:Ex`, no `FileExplorer` autocmds, no directory takeover.
+  --  See `:help netrw` and `:help packadd`
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
 
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -339,6 +271,22 @@ do
     callback = function()
       -- Normal file buffers only; skip terminal/help/quickfix/prompt buffers.
       if vim.o.buftype == '' then vim.cmd 'silent! checktime' end
+    end,
+  })
+
+  -- Autosave modified file buffers when leaving the buffer or losing focus.
+  --  Deliberately not on InsertLeave: that would fire format-on-save and LSP
+  --  diagnostics on every pause while typing, which is noisy for little gain.
+  vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
+    desc = 'Save modified file buffers automatically',
+    group = vim.api.nvim_create_augroup('kickstart-autosave', { clear = true }),
+    callback = function()
+      -- Skip unnamed and special buffers
+      if vim.bo.buftype ~= '' or vim.api.nvim_buf_get_name(0) == '' then return end
+      if not vim.bo.modified then return end
+
+      -- Write without raising on read-only or unwritable buffers
+      vim.cmd 'silent! write'
     end,
   })
 end
@@ -563,6 +511,7 @@ do
     gh 'nvim-lua/plenary.nvim',
     gh 'nvim-telescope/telescope.nvim',
     gh 'nvim-telescope/telescope-ui-select.nvim',
+    gh 'nvim-telescope/telescope-file-browser.nvim',
   }
   if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 
@@ -582,12 +531,20 @@ do
     -- pickers = {}
     extensions = {
       ['ui-select'] = { require('telescope.themes').get_dropdown() },
+      -- NOTE: the key must match the extension's module name
+      -- (`telescope._extensions.file_browser`), so it uses an underscore.
+      file_browser = {
+        -- Open the file browser instead of netrw when a directory is opened,
+        -- e.g. `nvim .` or `:edit <dir>`. Netrw itself is disabled in Section 1.
+        hijack_netrw = true,
+      },
     },
   }
 
   -- Enable Telescope extensions if they are installed
   pcall(require('telescope').load_extension, 'fzf')
   pcall(require('telescope').load_extension, 'ui-select')
+  pcall(require('telescope').load_extension, 'file_browser')
 
   -- See `:help telescope.builtin`
   local builtin = require 'telescope.builtin'
@@ -603,6 +560,20 @@ do
   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
   vim.keymap.set('n', '<leader>p', builtin.git_files, { desc = 'Search Git Files' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+  -- Browse the file system from the current buffer's directory, with that file
+  -- selected. This replaces netrw's `:Ex`; netrw is disabled in Section 1.
+  vim.keymap.set(
+    'n',
+    '<leader>e',
+    function()
+      require('telescope').extensions.file_browser.file_browser {
+        path = '%:p:h',
+        select_buffer = true,
+      }
+    end,
+    { desc = 'Open file [E]xplorer' }
+  )
 
   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
   -- If you later switch picker plugins, this is where to update these mappings.
