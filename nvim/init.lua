@@ -438,6 +438,14 @@ do
   --  A collection of various small independent plugins/modules
   vim.pack.add { gh 'nvim-mini/mini.nvim' }
 
+  -- Icons for file types, extensions and LSP kinds. `mock_nvim_web_devicons`
+  --  additionally makes this the provider for plugins that expect
+  --  `nvim-web-devicons` -- nvim-tree uses it for file icons -- so that plugin
+  --  never has to be installed.
+  local mini_icons = require 'mini.icons'
+  mini_icons.setup()
+  mini_icons.mock_nvim_web_devicons()
+
   -- Better Around/Inside textobjects
   --
   -- Examples:
@@ -555,6 +563,8 @@ do
   -- File explorer, replacing netrw (disabled in Section 1).
   --  nvim-tree takes over directory buffers through its default
   --  `hijack_directories`, so `nvim .` opens the tree instead of a listing.
+  --  File icons come from mini.icons (Section 3); folder icons use nvim-tree's
+  --  own glyphs, as mini.icons resolves folders through its `file` category.
   vim.pack.add { gh 'nvim-tree/nvim-tree.lua' }
   require('nvim-tree').setup {
     -- Netrw handling belongs to Section 1. With `hijack_netrw` left on,
@@ -811,7 +821,13 @@ do
     neocmake = {},
     gopls = {},
     pyright = {},
-    -- rust_analyzer = {},
+    -- Rust.
+    --  Mason's standalone rust-analyzer wins on PATH -- Mason prepends its bin
+    --  directory -- over the rustup shim in `~/.cargo/bin`, which errors unless
+    --  the `rust-analyzer` rustup component is installed. The Cargo workspace
+    --  root, run/debug code lenses and `:LspCargoReload` come from
+    --  nvim-lspconfig's own defaults.
+    rust_analyzer = {},
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
