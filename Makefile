@@ -43,8 +43,14 @@ link-%: ## stow a single package, e.g. `make link-nvim`
 unlink-%: ## unstow a single package, e.g. `make unlink-nvim`
 	@REPO="$(REPO)" sh scripts/stow.sh unlink "$*"
 
-tmux-plugins: ## bootstrap TPM (tmux plugin manager) into tmux/plugins
+tmux-plugins: ## bootstrap TPM + plugins listed in tmux/tmux.conf
 	@mkdir -p "$(REPO)/tmux/plugins"
 	@[ -d "$(REPO)/tmux/plugins/tpm" ] || \
 		git clone --depth=1 https://github.com/tmux-plugins/tpm "$(REPO)/tmux/plugins/tpm"
-	@echo "TPM ready — start tmux and press prefix + I to install plugins"
+	@grep -oE "set -g @plugin '[^']+'" "$(REPO)/tmux/tmux.conf" | cut -d"'" -f2 | while read -r p; do \
+		d="$(REPO)/tmux/plugins/$${p##*/}"; \
+		[ -d "$$d" ] && continue; \
+		printf '  cloning %s\n' "$$p"; \
+		git clone --single-branch --recursive "https://github.com/$$p" "$$d" || exit 1; \
+	done
+	@echo "tmux plugins ready — start tmux and press prefix + I if anything is missing"

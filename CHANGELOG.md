@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `make tmux-plugins` now clones every plugin declared in `tmux/tmux.conf`,
+  not just TPM, so a fresh machine is fully set up without pressing
+  `prefix + I`. The plugin list is parsed from the config, keeping it the
+  single source of truth.
+
+### Changed
+
+- `tmux`: one portable config for macOS and Linux, stowed to
+  `~/.config/tmux/tmux.conf`. Copying uses OSC 52, so the macOS `pbcopy` and
+  X11 `xsel` bindings are gone and no clipboard tool is required.
+- `tmux`: panes get `tmux-256color` with true colour (falling back to
+  `screen-256color` when the terminfo entry is missing), `focus-events` so
+  nvim's autosave-on-blur fires, `extended-keys` for Shift+Enter, a
+  50 000-line history, and `M-h`/`M-l` for windows instead of `C-S-h`/`C-S-l`.
+- `tmux`: plugins load from `~/.config/tmux/plugins`, so the config no longer
+  hardcodes the repo location. `vim-tmux-navigator` is dropped in favour of
+  the `C-hjkl` passthrough, which also covers ssh/mosh panes.
+
+### Fixed
+
+- `tmux`: the copy-mode `n` binding was swallowing the `N` binding as its
+  arguments; both are now separate lines.
+- `tmux`: removed the duplicate `mode-keys` line, the double TPM run, the
+  `source_plugins.sh` workaround, and the dead
+  `@catppuccin_window_default_text` option.
+- `tmux`: the window list no longer has a double indent (`basic` style already
+  prepends a space).
+- README: correct clone path (`~/dev/.dotfiles`), and tmux plugins are cloned
+  by `make tmux-plugins` rather than vendored.
+
 ## [0.3.1] - 2026-10-25
 
 ### Added

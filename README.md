@@ -10,7 +10,7 @@ into its target (usually `~/.config/<package>/`):
 |-----------|---------------------|-----------------------------------------|
 | `ghostty` | `~/.config/ghostty` | Ghostty terminal config                 |
 | `nvim`    | `~/.config/nvim`    | Neovim (kickstart-based, `vim.pack`)    |
-| `tmux`    | `~/.config/tmux`    | tmux config (+ vendored plugins)        |
+| `tmux`    | `~/.config/tmux`    | tmux config (TPM cloned by `make tmux-plugins`) |
 | `git`     | `~/.config/git`     | Git config                              |
 | `.zsh`    | `~/.zsh`            | zsh config (`ZDOTDIR`) and `custom/`    |
 
@@ -23,6 +23,8 @@ symlink that points zsh at it.
 - Git and `make` (macOS: `xcode-select --install`)
 - A font for the Ghostty config: **Iosevka Term**, available at
   [typeof.net/Iosevka](https://typeof.net/Iosevka/)
+- A **Nerd Font** for the tmux status line: the Catppuccin modules use Nerd
+  Font icons and powerline separators, which render as tofu boxes otherwise.
 
 Each package requires a minimum tool version, checked by `make doctor` (and
 automatically as the first step of `make link`):
@@ -38,8 +40,8 @@ automatically as the first step of `make link`):
 ## Install
 
 ```bash
-git clone git@github.com:smnspz/.dotfiles.git ~/dev/repos/.dotfiles
-cd ~/dev/repos/.dotfiles
+git clone git@github.com:smnspz/.dotfiles.git ~/dev/.dotfiles
+cd ~/dev/.dotfiles
 make link
 ```
 
@@ -50,8 +52,11 @@ symlinks), so it never clobbers your data. Use `make check` to preview only.
 Then:
 
 ```bash
-make tmux-plugins   # clone TPM; afterwards press prefix + I inside tmux
+make tmux-plugins   # clone TPM + every plugin listed in tmux.conf
 ```
+
+tmux copies to the system clipboard over **OSC 52**, so no `pbcopy`/`xsel`
+dependency is needed: it works on macOS, X11, Wayland and across SSH.
 
 ## Targets
 
@@ -66,7 +71,7 @@ make tmux-plugins   # clone TPM; afterwards press prefix + I inside tmux
 | `unlink`                      | Remove all Stow-managed symlinks                 |
 | `adopt`                       | Pull existing real files into the repo + diff    |
 | `link-<pkg>` / `unlink-<pkg>` | Act on a single package (e.g. `link-nvim`)       |
-| `tmux-plugins`                | Bootstrap TPM into `tmux/plugins`                |
+| `tmux-plugins`                | Clone TPM + config plugins into `tmux/plugins`   |
 
 ## How Stow works here
 
