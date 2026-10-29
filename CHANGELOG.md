@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `nvim`: hardtime.nvim blocks repeated `hjkl`/arrow-key motions and suggests
+  a better motion, with `:Hardtime` for the bad-habit report. Defaults apply,
+  so the mouse is disabled and prompt-like buffers (Telescope, nvim-tree,
+  quickfix) are exempt.
 - `make tmux-plugins` now clones every plugin declared in `tmux/tmux.conf`,
   not just TPM, so a fresh machine is fully set up without pressing
   `prefix + I`. The plugin list is parsed from the config, keeping it the

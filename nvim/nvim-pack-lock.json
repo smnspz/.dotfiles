@@ -30,6 +30,10 @@
       "rev": "84a4987ff36798c2fc1169cbaff67960aed9776f",
       "src": "https://github.com/NMAC427/guess-indent.nvim"
     },
+    "hardtime.nvim": {
+      "rev": "721a75b9a0c2eb1fb811d34507708ee315cb04eb",
+      "src": "https://github.com/m4xshen/hardtime.nvim"
+    },
     "markview.nvim": {
       "rev": "5d9fc2aa6dd1c2fbdc7a68bc79b300e9967b21ff",
       "src": "https://github.com/OXY2DEV/markview.nvim"
